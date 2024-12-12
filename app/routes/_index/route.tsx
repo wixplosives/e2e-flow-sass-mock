@@ -1,19 +1,86 @@
+import classNames from 'classnames';
+import styles from './_index.module.scss';
 import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { getUrlOriginWithPath } from '~/utils';
-import styles from './_index.module.scss';
+import { useState } from 'react';
+import { Avatar } from '~/components/avatar/avatar';
+import { NoStyleSheet } from '~/components/no-style-sheet/no-style-sheet';
+import * as Label from '@radix-ui/react-label';
+
+interface HomePageProps {
+    header?: string;
+    color?: string;
+    options?: string[];
+}
 
 export const loader = ({ request }: LoaderFunctionArgs) => {
     return { canonicalUrl: getUrlOriginWithPath(request.url) };
 };
 
-export default function HomePage() {
+export default function HomePage({ header, color, options }: HomePageProps) {
+    const [isChecked, setIsChecked] = useState(false);
+
+    const returnOptions = (options: string[]) => {
+        return options.map((item: string) => {
+            return (
+                <div key={item}>
+                    <input type="radio" id={item} />
+                    <label htmlFor={item}>option {item}</label>
+                </div>
+            );
+        });
+    };
+
+    const toggleCheckBox = () => {
+        setIsChecked(!isChecked);
+    };
+
     return (
-        <div className={styles.root}>
-            <h2 className={styles.title}>Welcome To App Homepage 🎉</h2>
-            <span className={styles.paragraph}>
-                Drag here elements from the Add Elements Panel
-                <br /> and style them using the Styles panel
-            </span>
+        <div className={styles.App} style={{ backgroundColor: color || 'lightBlue' }}>
+            <h1 className={classNames(styles.A, styles.B, styles.C, styles.D, styles.E, styles.F)}>
+                {header || 'Header'}
+            </h1>
+            <Avatar
+                image={'https://avatars.githubusercontent.com/u/67858097?v=4'}
+                title={'Sagiv Dayan'}
+                subtitle={'@thealmightycrumb'}
+                children={<div></div>}
+            ></Avatar>
+            <div></div>
+            <img src="https://wixplosives.github.io/codux-assets-storage/add-panel/image-placeholder.jpg" />
+            <div className={styles.yellowCircleContainer}>
+                <NoStyleSheet />
+            </div>
+            <div>
+                <div className={classNames(styles.radioButtonContainer, styles.radioButtonsDiv)}>
+                    {returnOptions(options || ['A', 'B', 'C'])}
+                </div>
+                <div className={styles.checkboxDiv}>
+                    <input
+                        type="checkbox"
+                        id="termsCheckbox"
+                        name="subscribe"
+                        onClick={toggleCheckBox}
+                    />
+                    <label htmlFor="termsCheckbox">
+                        I accept the terms of use, and aggree to share all my data
+                    </label>
+                </div>
+            </div>
+            <div style={{ color: 'red' }}>
+                {isChecked ? (
+                    <button className={styles.enable}>Enter</button>
+                ) : (
+                    <span>To continue, you need to agree to the term</span>
+                )}
+            </div>
+            <Label.Root>I'm a label</Label.Root>
+            <div>
+                <label htmlFor="mainInput">Enter your name below</label>
+                <div>
+                    <input id="mainInput" />
+                </div>
+            </div>
         </div>
     );
 }

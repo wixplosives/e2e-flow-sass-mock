@@ -1,0 +1,29 @@
+@use '../../../src/styles/theme.module.scss';
+
+.root {
+  display: flex;
+  column-gap: 7px;
+  align-items: center;
+  padding: 10px;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.avatarImage {
+  object-fit: contain;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatarTitle {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.avatarSubtitle {
+  font-style: italic;
+  font-size: 14px;
+}

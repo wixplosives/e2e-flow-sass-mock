@@ -1,9 +1,3 @@
-import '~/styles/reset.scss';
-import '~/styles/colors.scss';
-import '~/styles/typography.scss';
-import '~/styles/global.scss';
-import '~/styles/utils.scss';
-
 import {
     Links,
     Meta,
@@ -14,6 +8,9 @@ import {
     useRouteError,
 } from '@remix-run/react';
 import { ErrorComponent } from '~/components/error-component/error-component';
+import '~/styles/index.scss';
+import type { LinksFunction } from '@remix-run/node';
+import stylesheet from './tailwind.css';
 
 export function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -35,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
     return (
-        <div id="root">
+        <div>
             <Outlet />
         </div>
     );
@@ -66,3 +63,5 @@ function getErrorDetails(error: unknown) {
 
     return { title, message };
 }
+
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet }];
